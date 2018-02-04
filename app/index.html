@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">Click to render "renderComponet('#root')"</button>
+  <div id="root"></div>
+  <script src="http://localhost:5000/vendors.5247d6505df09945079c.js"></script>
+  <script src="http://localhost:5000/ReactComponentBp.js"></script>
+  <script>
+    document.querySelector('#btn').addEventListener('click', function (e) {
+      e.preventDefault()
+      renderComponet('#root')
+    })
+  </script>
+</body>
+</html>
