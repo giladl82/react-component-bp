@@ -44,7 +44,8 @@ const basicExport = {
           'style-loader',
           { loader: 'css-loader', options: { modules: true, importLoaders: 1 } },
           {
-            loader: 'postcss-loader', options: {
+            loader: 'postcss-loader',
+            options: {
               config: {
                 path: './postcss.config.js'
               }
