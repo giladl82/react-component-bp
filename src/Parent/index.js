@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import Child from '../Child'
 
 import style from './style.scss'
 
-const Parent = props => {
-  return (
-    <div className={style['parent-component']}>
-      Parent component
-      <Child />
-    </div>
-  )
+class Parent extends Component {
+  handleClick = () => {
+    console.log('Click')
+  }
+
+  render () {
+    return (
+      <div onClick={this.handleClick} className={style['parent-component']} >
+        Parent component
+        <Child />
+      </div>
+    )
+  }
 }
 
 export default Parent
