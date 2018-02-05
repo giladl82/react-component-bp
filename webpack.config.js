@@ -45,6 +45,7 @@ module.exports = {
     path: path.join(__dirname, `build`),
     filename: appName + '.js',
     library: appName,
+    libraryTarget: "umd",
     chunkFilename: '[id].chunk.js',
     sourceMapFilename: appName + '.map.js'
   },
