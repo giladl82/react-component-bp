@@ -1,10 +1,11 @@
 const path = require('path');
 const pascalcase = require('pascalcase');
 // const webpack = require('webpack');
+const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let appName;
-if(__dirname.indexOf('\\')) {
+if (__dirname.indexOf('\\')) {
   appName = pascalcase(__dirname.split('\\').pop())
 } else {
   appName = pascalcase(__dirname.split('/').pop())
@@ -16,18 +17,14 @@ const CleanWebpackPluginConfig = new CleanWebpackPlugin([
   path.join(__dirname, `build`)
 ])
 
-module.exports = {
+
+const basicExport = {
   entry: {
     component: path.resolve(__dirname, 'src/index.js')
   },
   output: {
-    path: path.join(__dirname, `build`),
-    filename: 'index.js',
-    library: appName,
-    libraryTarget: "umd",
-    sourceMapFilename: 'index.map.js'
+    path: path.join(__dirname, 'build')
   },
-  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -46,21 +43,43 @@ module.exports = {
         use: [
           'style-loader',
           { loader: 'css-loader', options: { modules: true, importLoaders: 1 } },
-          {loader: 'postcss-loader', options: {
-            config: {
-              path: './postcss.config.js'
+          {
+            loader: 'postcss-loader', options: {
+              config: {
+                path: './postcss.config.js'
+              }
             }
-          }}
+          }
         ]
       },
       {
         test: /\.(png|jpg|svg)$/,
-        use: [ {
+        use: [{
           loader: 'url-loader',
           options: { limit: 10000 } // Convert images < 10k to base64 strings
         }]
       }
     ]
   },
-  plugins: [ CleanWebpackPluginConfig]
+  devtool: 'source-map',
+  plugins: [CleanWebpackPluginConfig]
 }
+
+const commonjs2Export = merge.smart(basicExport, {
+  output: {
+    filename: 'index.js',
+    library: appName,
+    libraryTarget: 'commonjs2'
+  }
+})
+
+const umdExport = merge.smart(basicExport, {
+  output: {
+    filename: 'bundle.js',
+    library: appName,
+    libraryTarget: 'umd',
+    sourceMapFilename: 'bundle.map.js'
+  }
+})
+
+module.exports = [commonjs2Export, umdExport]
