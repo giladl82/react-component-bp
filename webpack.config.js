@@ -3,7 +3,16 @@ const pascalcase = require('pascalcase');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const appName = pascalcase(__dirname.split('/').pop());
+console.log(__dirname)
+
+let appName;
+if(__dirname.indexOf('\\')) {
+  appName = pascalcase(__dirname.split('\\').pop())
+} else {
+  appName = pascalcase(__dirname.split('/').pop())
+}
+
+console.log('App name: ' + appName);
 
 const vendorModules = [
  // 'classnames',
