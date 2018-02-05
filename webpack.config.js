@@ -1,9 +1,7 @@
 const path = require('path');
 const pascalcase = require('pascalcase');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-console.log(__dirname)
 
 let appName;
 if(__dirname.indexOf('\\')) {
@@ -12,26 +10,7 @@ if(__dirname.indexOf('\\')) {
   appName = pascalcase(__dirname.split('/').pop())
 }
 
-console.log('App name: ' + appName);
-
-const vendorModules = [
- // 'classnames',
- // 'react-dom',
- // 'react',
- // 'react-addons-css-transition-group',
- // 'react-intl',
- // 'react-modal',
- // 'react-redux',
- // 'react-router-dom',
- // 'redux',
- // 'redux-thunk'
-]
-
-// extracting comon modules to vendor
-// const CommonsChunkPluginConfig = new webpack.optimize.CommonsChunkPlugin({
-//   name: 'vendors',
-//   filename: 'vendors.[hash].js'
-// })
+console.log('App:' + appName);
 
 const CleanWebpackPluginConfig = new CleanWebpackPlugin([
   path.join(__dirname, `build`)
@@ -43,11 +22,10 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, `build`),
-    filename: appName + '.js',
+    filename: 'index.js',
     library: appName,
     libraryTarget: "umd",
-    chunkFilename: '[id].chunk.js',
-    sourceMapFilename: appName + '.map.js'
+    sourceMapFilename: 'index.map.js'
   },
   devtool: 'source-map',
   module: {
@@ -84,5 +62,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [ CleanWebpackPluginConfig] //, CommonsChunkPluginConfig]
+  plugins: [ CleanWebpackPluginConfig]
 }
