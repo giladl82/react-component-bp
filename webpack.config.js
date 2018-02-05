@@ -7,8 +7,8 @@ const appName = pascalcase(__dirname.split('/').pop());
 
 const vendorModules = [
  // 'classnames',
-  'react',
-  'react-dom',
+ // 'react-dom',
+ // 'react',
  // 'react-addons-css-transition-group',
  // 'react-intl',
  // 'react-modal',
@@ -19,10 +19,10 @@ const vendorModules = [
 ]
 
 // extracting comon modules to vendor
-const CommonsChunkPluginConfig = new webpack.optimize.CommonsChunkPlugin({
-  name: 'vendors',
-  filename: 'vendors.[hash].js'
-})
+// const CommonsChunkPluginConfig = new webpack.optimize.CommonsChunkPlugin({
+//   name: 'vendors',
+//   filename: 'vendors.[hash].js'
+// })
 
 const CleanWebpackPluginConfig = new CleanWebpackPlugin([
   path.join(__dirname, `build`)
@@ -30,13 +30,13 @@ const CleanWebpackPluginConfig = new CleanWebpackPlugin([
 
 module.exports = {
   entry: {
-    vendors: vendorModules,
     component: path.resolve(__dirname, 'src/index.js')
   },
   output: {
     path: path.join(__dirname, `build`),
     filename: appName + '.js',
     library: appName,
+    chunkFilename: '[id].chunk.js',
     sourceMapFilename: appName + '.map.js'
   },
   devtool: 'source-map',
@@ -64,7 +64,7 @@ module.exports = {
             }
           }}
         ]
-      },      
+      },
       {
         test: /\.(png|jpg|svg)$/,
         use: [ {
@@ -74,5 +74,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [ CleanWebpackPluginConfig, CommonsChunkPluginConfig]
+  plugins: [ CleanWebpackPluginConfig] //, CommonsChunkPluginConfig]
 }
