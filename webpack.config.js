@@ -17,7 +17,6 @@ const CleanWebpackPluginConfig = new CleanWebpackPlugin([
   path.join(__dirname, `build`)
 ])
 
-
 const basicExport = {
   entry: {
     component: path.resolve(__dirname, 'src/index.js')
@@ -42,7 +41,15 @@ const basicExport = {
         test: /\.scss$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { modules: true, importLoaders: 1 } },
+          {
+            loader: 'css-loader', options: {
+              modules: true,
+              sourceMap: true,
+              camelCase: true,
+              importLoaders: 1,
+              localIdentName: '[local]' // [path][name]__[local]--[hash:base64:5]
+            }
+          },
           {
             loader: 'postcss-loader',
             options: {
@@ -74,13 +81,15 @@ const commonjs2Export = merge.smart(basicExport, {
   }
 })
 
-const umdExport = merge.smart(basicExport, {
-  output: {
-    filename: 'bundle.js',
-    library: appName,
-    libraryTarget: 'umd',
-    sourceMapFilename: 'bundle.map.js'
-  }
-})
+// const umdExport = merge.smart(basicExport, {
+//   output: {
+//     filename: 'bundle.js',
+//     library: appName,
+//     libraryTarget: 'umd',
+//     sourceMapFilename: 'bundle.map.js'
+//   }
+// })
 
-module.exports = [commonjs2Export, umdExport]
+// module.exports = [commonjs2Export, umdExport]
+
+module.exports = commonjs2Export
